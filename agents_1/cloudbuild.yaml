@@ -1,0 +1,7 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  script: |
+    docker build -t asia-south1-docker.pkg.dev/agentic-ai-solution/container-images-registry/mcp-usage:v1 .
+  automapSubstitutions: true
+images:
+- 'asia-south1-docker.pkg.dev/agentic-ai-solution/container-images-registry/mcp-usage:v1'
