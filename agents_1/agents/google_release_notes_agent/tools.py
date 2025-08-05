@@ -418,6 +418,8 @@ github_mcp_tools = MCPToolset(
         "list_pull_requests",
         "get_pull_request",
         "list_pull_requests",
-        "search_users"
+        "search_users",
+        "search_orgs",
+        "get_file_contents"
     ],
 )
