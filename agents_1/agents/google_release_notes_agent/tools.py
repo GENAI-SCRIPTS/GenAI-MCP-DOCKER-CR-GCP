@@ -27,9 +27,11 @@ from google.cloud import bigquery
 from google.genai import Client
 from dotenv import load_dotenv
 from google.adk.tools.mcp_tool import MCPToolset, StreamableHTTPConnectionParams
-
+from google.adk.tools.agent_tool import AgentTool
 load_dotenv()
 
+#import tools
+from .sub_agents import file_system_agent 
 
 
 # Assume that `BQ_COMPUTE_PROJECT_ID` and `BQ_DATA_PROJECT_ID` are set in the
@@ -423,3 +425,17 @@ github_mcp_tools = MCPToolset(
         "get_file_contents"
     ],
 )
+
+##### filesystem tools #################
+#convert filesystem agent as a tool
+
+async def call_file_system_agent(
+    user_question:str,
+    tool_context: ToolContext):
+    
+    agent_tool = AgentTool(agent=file_system_agent())
+    agent_output = await agent_tool.run_async(
+        args={"request": user_question}, tool_context=tool_context
+    )
+    tool_context.state["FS_agent_output"] = agent_output
+    return agent_output
