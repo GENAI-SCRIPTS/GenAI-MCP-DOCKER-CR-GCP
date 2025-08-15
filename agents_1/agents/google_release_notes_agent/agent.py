@@ -7,6 +7,7 @@ from google.genai import types
 from dotenv import load_dotenv
 import os
 load_dotenv()
+from .tools import call_file_system_agent
 
 
 
@@ -42,9 +43,11 @@ root_agent = Agent(
       Keep in mind that you are an orchestration agent, not a SQL expert, so use the tools to help you generate SQL, but do not make up SQL.
     B. Assistant for Github operation 
        Use the github_mcp_tools for any user query regarding pull request,issue,repository etc
-       
+    C. FileSytem operations
+       Use the call_file_system_agent to perform any filesystem releated operations.
+       Understand the user requirement and ask for clarification if required.   
     """,
-    tools=[initial_bq_nl2sql, run_bigquery_validation,github_mcp_tools],
+    tools=[initial_bq_nl2sql, run_bigquery_validation,github_mcp_tools,call_file_system_agent],
     before_agent_callback=setup_bigquery_config,
     generate_content_config = types.GenerateContentConfig(temperature=0.01)
 
